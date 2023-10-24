@@ -1,7 +1,5 @@
 void main() {
   asalSayilariBul(100);
-  int sonuc = faktoriyelHesapla(2);
-  print(sonuc);
 }
 
 void asalSayilariBul(int finish) {
@@ -19,12 +17,4 @@ void asalSayilariBul(int finish) {
       print(i);
     }
   }
-}
-
-int faktoriyelHesapla(int sayi) {
-  if (sayi == 0 || sayi == 1) {
-    return 1;
-  }
-
-  return sayi * faktoriyelHesapla(sayi - 1);
 }
