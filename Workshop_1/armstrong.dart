@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 void main() {
@@ -10,9 +9,8 @@ void armstrongNumber(int sayi) {
   List<String> numList = sayi.toString().split('');
   int len = numList.length;
 
-  for (int i = 0; i < len; i++) {
-    int currNum = int.parse(numList[i]);
-    sum += pow(currNum, len).toInt();
+  for (String number in numList) {
+    sum += pow(int.parse(number), len).toInt();
   }
 
   if (sum == sayi) {
