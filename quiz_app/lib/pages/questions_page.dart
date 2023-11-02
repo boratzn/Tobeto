@@ -51,6 +51,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
                               actions: [
                                 TextButton(
                                     style: OutlinedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.deepPurpleAccent,
                                         textStyle:
                                             const TextStyle(fontSize: 18)),
                                     onPressed: () {
@@ -62,7 +64,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
                                                 const HomePage(),
                                           ));
                                     },
-                                    child: const Text("Anasayfaya Dön"))
+                                    child: const Text(
+                                      "Anasayfaya Dön",
+                                      style: TextStyle(color: Colors.white),
+                                    ))
                               ],
                             );
                           },
