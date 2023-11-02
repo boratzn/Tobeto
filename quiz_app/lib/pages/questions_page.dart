@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/main.dart';
 
 import '../data/questions.dart';
 import '../models/question.dart';
-import 'result_page.dart';
 
 class QuestionsPage extends StatefulWidget {
   const QuestionsPage({super.key});
@@ -27,14 +27,46 @@ class _QuestionsPageState extends State<QuestionsPage> {
               ? Center(
                   child: ElevatedButton(
                       style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.deepPurpleAccent,
                           padding: const EdgeInsets.all(20)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ResultPage(rightAns, questions.length),
-                            ));
+                      onPressed: () async {
+                        return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Sonuç"),
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Doğru Sayısı : $rightAns",
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  Text(
+                                      "Yanlış Sayısı : ${questions.length - rightAns}",
+                                      style: const TextStyle(fontSize: 18)),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                    style: OutlinedButton.styleFrom(
+                                        textStyle:
+                                            const TextStyle(fontSize: 18)),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage(),
+                                          ));
+                                    },
+                                    child: const Text("Anasayfaya Dön"))
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: const Text(
                         "Testi Bitir",
@@ -63,6 +95,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
                             }
                           });
                         },
+                        style: OutlinedButton.styleFrom(
+                          fixedSize: const Size(120, 40),
+                          backgroundColor: Colors.deepPurpleAccent,
+                        ),
                         child: Text(e),
                       );
                     }),

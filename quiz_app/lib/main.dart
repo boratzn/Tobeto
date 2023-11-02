@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
             ),
             OutlinedButton.icon(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const QuestionsPage()));
