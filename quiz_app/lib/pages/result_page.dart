@@ -18,7 +18,7 @@ class ResultPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Doğru Sayısı : ${rightAns}",
+              "Doğru Sayısı : $rightAns",
               style: const TextStyle(fontSize: 25),
             ),
             Text(
@@ -30,7 +30,7 @@ class ResultPage extends StatelessWidget {
             ),
             ElevatedButton(
                 style: OutlinedButton.styleFrom(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     backgroundColor: Colors.deepPurpleAccent),
                 onPressed: () {
                   Navigator.push(
