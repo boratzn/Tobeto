@@ -55,37 +55,50 @@ class ResultPage extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) {
-                          return const Divider(
-                            thickness: 1,
-                          );
-                        },
-                        itemCount: questions.length,
-                        itemBuilder: (context, index) {
-                          var question = questions[index];
-                          return ListTile(
-                            iconColor: question.answer == question.userAnswer
-                                ? Colors.green
-                                : Colors.red,
-                            title: Text(question.question),
-                            subtitle: Text(
-                                "Your answer is ${question.userAnswer}. Correct answer is ${question.answer}"),
-                            leading: question.answer == question.userAnswer
-                                ? const Icon(
-                                    Icons.check_circle,
-                                  )
-                                : const Icon(Icons.cancel),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  SonucListesi(questions: questions),
                 ],
               )
-            : Center());
+            : const Center());
+  }
+}
+
+class SonucListesi extends StatelessWidget {
+  const SonucListesi({required this.questions, super.key});
+
+  final List<Question> questions;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListView.separated(
+            itemBuilder: (context, index) {
+              var question = questions[index];
+              return Card(
+                elevation: 3,
+                color: Colors.grey[200],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: ListTile(
+                  iconColor: question.answer == question.userAnswer
+                      ? Colors.green
+                      : Colors.red,
+                  title: Text(question.question),
+                  subtitle: Text(
+                      "Your answer is ${question.userAnswer}. Correct answer is ${question.answer}"),
+                  leading: question.answer == question.userAnswer
+                      ? const Icon(
+                          Icons.check_circle,
+                        )
+                      : const Icon(Icons.cancel),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => Divider(thickness: 1),
+            itemCount: questions.length),
+      ),
+    );
   }
 }
