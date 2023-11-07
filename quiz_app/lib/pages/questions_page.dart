@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/main.dart';
+import 'package:quiz_app/pages/result_page.dart';
 
 import '../data/questions.dart';
 import '../models/question.dart';
@@ -20,11 +20,74 @@ class _QuestionsPageState extends State<QuestionsPage> {
   Widget build(BuildContext context) {
     Question question = questions[currQuestionIdx];
     return Scaffold(
-        appBar: AppBar(title: const Text('Questions')),
+        appBar: AppBar(
+          title: const Text('Questions'),
+          actions: checkState
+              ? [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ResultPage(
+                                  questions: questions, rightAnswer: rightAns),
+                            ));
+                      },
+                      child: const Text(
+                        "Testi Bitir",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ))
+                ]
+              : null,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: checkState
-              ? Center(
+              ? const Center(
+                  child: Text(
+                    "Testiniz Bitmiştir. Yukarıdan Testi Bitir Diyerek Sonucunuzu görebilirsiniz.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      question.question,
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center,
+                    ),
+                    ...question.options.map((e) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            question.userAnswer = e;
+                            if (e == question.answer) rightAns++;
+
+                            if (currQuestionIdx < questions.length - 1) {
+                              currQuestionIdx++;
+                            } else {
+                              checkState = true;
+                            }
+                          });
+                        },
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.deepPurpleAccent,
+                        ),
+                        child: Text(e),
+                      );
+                    }),
+                  ],
+                ),
+        ));
+  }
+}
+
+
+/*
+Center(
                   child: ElevatedButton(
                       style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.deepPurpleAccent,
@@ -78,36 +141,4 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         style: TextStyle(fontSize: 25),
                       )),
                 )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      question.question,
-                      style: const TextStyle(fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    ...question.options.map((e) {
-                      return ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (e == question.answer) rightAns++;
-
-                            if (currQuestionIdx < questions.length - 1) {
-                              currQuestionIdx++;
-                            } else {
-                              checkState = true;
-                            }
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.deepPurpleAccent,
-                        ),
-                        child: Text(e),
-                      );
-                    }),
-                  ],
-                ),
-        ));
-  }
-}
+*/ 
