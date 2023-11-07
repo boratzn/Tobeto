@@ -80,7 +80,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       question.question,
@@ -101,7 +101,6 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           });
                         },
                         style: OutlinedButton.styleFrom(
-                          fixedSize: const Size(120, 40),
                           backgroundColor: Colors.deepPurpleAccent,
                         ),
                         child: Text(e),
