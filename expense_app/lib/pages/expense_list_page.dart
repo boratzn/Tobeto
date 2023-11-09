@@ -17,7 +17,6 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
         title: const Text("Expense App"),
       ),
       body: Padding(
@@ -30,7 +29,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
               child: PieChartSample(),
             ),
             const Divider(
-              color: Colors.red,
+              color: Colors.blue,
             ),
             const Text(
               "Hareketler",
@@ -48,21 +47,23 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                 itemCount: expenseList.length,
                 itemBuilder: (context, index) {
                   var item = expenseList[index];
-                  String date = DateFormat('yMd').format(item.date);
+                  String date = DateFormat('d/M/y').format(item.date);
                   return ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                       side: const BorderSide(
-                        color: Colors.grey,
+                        color: Colors.blue,
                       ),
                     ),
-                    iconColor: Colors.black,
+                    iconColor: Colors.blueGrey,
                     leading: checkIcons(item.category),
                     title: Text(
                       textAlign: TextAlign.center,
                       item.name,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w500),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     subtitle: Text(
                       textAlign: TextAlign.center,
@@ -70,7 +71,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                        color: Colors.redAccent,
                       ),
                     ),
                     trailing: Text(date),
@@ -82,7 +83,6 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
         child: const Icon(Icons.add),
         onPressed: () {},
       ),

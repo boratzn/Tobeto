@@ -59,7 +59,7 @@ class PieChart2State extends State {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Indicator(
-                color: AppColors.contentColorBlue,
+                color: Colors.red,
                 text: Category.education.name,
                 isSquare: true,
               ),
@@ -109,7 +109,7 @@ class PieChart2State extends State {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: AppColors.contentColorBlue,
+            color: Colors.red,
             value: selectCategory(Category.education),
             title: '${selectCategory(Category.education)}%',
             radius: radius,
@@ -123,7 +123,7 @@ class PieChart2State extends State {
         case 1:
           return PieChartSectionData(
             color: AppColors.contentColorYellow,
-            value: 30,
+            value: selectCategory(Category.food),
             title: '${selectCategory(Category.food)}%',
             radius: radius,
             titleStyle: TextStyle(
@@ -136,7 +136,7 @@ class PieChart2State extends State {
         case 2:
           return PieChartSectionData(
             color: AppColors.contentColorPurple,
-            value: 15,
+            value: selectCategory(Category.technology),
             title: '${selectCategory(Category.technology)}%',
             radius: radius,
             titleStyle: TextStyle(
@@ -149,7 +149,7 @@ class PieChart2State extends State {
         case 3:
           return PieChartSectionData(
             color: AppColors.contentColorGreen,
-            value: 15,
+            value: selectCategory(Category.travel),
             title: '${selectCategory(Category.travel)}%',
             radius: radius,
             titleStyle: TextStyle(
