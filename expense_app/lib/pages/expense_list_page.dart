@@ -17,7 +17,8 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ExpenseApp"),
+        backgroundColor: Colors.red,
+        title: const Text("Expense App"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -29,7 +30,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
               child: PieChartSample(),
             ),
             const Divider(
-              color: Colors.grey,
+              color: Colors.red,
             ),
             const Text(
               "Hareketler",
@@ -51,9 +52,11 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                   return ListTile(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      side: const BorderSide(color: Colors.grey),
+                      side: const BorderSide(
+                        color: Colors.grey,
+                      ),
                     ),
-                    iconColor: Colors.blue,
+                    iconColor: Colors.black,
                     leading: checkIcons(item.category),
                     title: Text(
                       textAlign: TextAlign.center,
@@ -79,6 +82,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
         child: const Icon(Icons.add),
         onPressed: () {},
       ),
