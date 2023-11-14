@@ -74,7 +74,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                   child: SizedBox(
                     height: 410,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const Text(
                           "Hareket Ekle",
@@ -90,9 +90,6 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                                 borderSide: BorderSide(color: Colors.purple)),
                             labelText: "Açıklama",
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15,
                         ),
                         //*********************MİKTAR********************** */
                         TextField(
@@ -113,38 +110,37 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                               "Tarih seçiniz: ",
                               style: TextStyle(fontSize: 16),
                             ),
-                            IconButton(
-                                onPressed: () async {
-                                  final DateTime? dt = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime(2100));
-
-                                  if (dt != null) {
-                                    setState(() {
-                                      selectedDate = dt;
-                                      _controllerDate.text = DateFormat('d/M/y')
-                                          .format(selectedDate!)
-                                          .toString();
-                                    });
-                                  }
-                                },
-                                icon: const Icon(Icons.date_range)),
                             Expanded(
                               child: TextField(
                                 controller: _controllerDate,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
+                                      borderRadius: BorderRadius.circular(25),
                                       borderSide: const BorderSide(
                                         color: Colors.purple,
                                       ),
                                     ),
-                                    suffixIcon: const Icon(
-                                      Icons.date_range,
-                                    ),
-                                    enabled: false,
+                                    suffixIcon: IconButton(
+                                        onPressed: () async {
+                                          final DateTime? dt =
+                                              await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(1900),
+                                                  lastDate: DateTime(2100));
+
+                                          if (dt != null) {
+                                            setState(() {
+                                              selectedDate = dt;
+                                              _controllerDate.text =
+                                                  DateFormat('d/M/y')
+                                                      .format(selectedDate!)
+                                                      .toString();
+                                            });
+                                          }
+                                        },
+                                        icon: const Icon(Icons.date_range)),
+                                    //enabled: false,
                                     labelText: "Seçilen Tarih",
                                     hintText: selectedDate.toString()),
                               ),
@@ -162,7 +158,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(25),
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Colors.purple,
                                         ))),
                                 isExpanded: true,
