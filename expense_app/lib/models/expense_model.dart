@@ -7,7 +7,7 @@ class ExpenseModel extends ChangeNotifier {
   final List<Expense> _expense = expenseList;
   Category _category = Category.education;
 
-  List<Expense> get expense => _expense;
+  List<Expense> get expense => _expense.reversed.toList();
   Category get category => _category;
 
   set category(Category value) {
