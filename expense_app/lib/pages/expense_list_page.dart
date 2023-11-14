@@ -1,9 +1,12 @@
-import 'package:expense_app/data/expense_data.dart';
+import 'package:expense_app/models/expense.dart';
+import 'package:expense_app/models/expense_model.dart';
 import 'package:expense_app/widgets/pie_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import '../models/expense.dart';
+import '../data/expense_data.dart';
+import '../widgets/activities.dart';
 
 class ExpenseListPage extends StatefulWidget {
   const ExpenseListPage({super.key});
@@ -13,92 +16,196 @@ class ExpenseListPage extends StatefulWidget {
 }
 
 class _ExpenseListPageState extends State<ExpenseListPage> {
+  final TextEditingController _controllerTitle = TextEditingController();
+  final TextEditingController _controllerPrice = TextEditingController();
+  final TextEditingController _controllerDate = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Expense App"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Expanded(
-              flex: 3,
-              child: PieChartSample(),
-            ),
-            const Divider(
-              color: Colors.blue,
-            ),
-            const Text(
-              "Hareketler",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              flex: 5,
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(
+    final expModel = context.read<ExpenseModel>();
+    DateTime? selectedDate;
+
+    return Consumer<ExpenseModel>(
+      builder: (context, value, child) => Scaffold(
+        backgroundColor: Colors.deepPurple[100],
+        key: _scaffoldKey,
+        resizeToAvoidBottomInset: true,
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PieChartSample(),
+                Divider(
+                  color: Colors.purple,
+                ),
+                Text(
+                  "Hareketler",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
                   height: 10,
                 ),
-                itemCount: expenseList.length,
-                itemBuilder: (context, index) {
-                  var item = expenseList[index];
-                  String date = DateFormat('d/M/y').format(item.date);
-                  return ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    iconColor: Colors.blueGrey,
-                    leading: checkIcons(item.category),
-                    title: Text(
-                      textAlign: TextAlign.center,
-                      item.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text(
-                      textAlign: TextAlign.center,
-                      "${item.price}₺",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                    trailing: Text(date),
-                  );
-                },
-              ),
+                Expanded(child: Activities()),
+              ],
             ),
-          ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.purple,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              useSafeArea: true,
+              context: context,
+              builder: (context) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: 10,
+                      left: 16,
+                      right: 16,
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: SizedBox(
+                    height: 410,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Hareket Ekle",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        //*********************AÇIKLAMA****************** */
+                        TextField(
+                          autofocus: true,
+                          controller: _controllerTitle,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purple)),
+                            labelText: "Açıklama",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        //*********************MİKTAR********************** */
+                        TextField(
+                          keyboardType: TextInputType.number,
+                          autofocus: true,
+                          controller: _controllerPrice,
+                          decoration: const InputDecoration(
+                            hintText: "Miktar",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purple)),
+                            labelText: "Miktar",
+                          ),
+                        ),
+                        //*********************TARİH SEÇİMİ****************************
+                        Row(
+                          children: [
+                            const Text(
+                              "Tarih seçiniz: ",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  final DateTime? dt = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2100));
+
+                                  if (dt != null) {
+                                    setState(() {
+                                      selectedDate = dt;
+                                      _controllerDate.text = DateFormat('d/M/y')
+                                          .format(selectedDate!)
+                                          .toString();
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.date_range)),
+                            Expanded(
+                              child: TextField(
+                                controller: _controllerDate,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                        color: Colors.purple,
+                                      ),
+                                    ),
+                                    suffixIcon: const Icon(
+                                      Icons.date_range,
+                                    ),
+                                    enabled: false,
+                                    labelText: "Seçilen Tarih",
+                                    hintText: selectedDate.toString()),
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            //*********************KATEGORİ SEÇİMİ****************************
+                            const Text("Kategori: ",
+                                style: TextStyle(fontSize: 16)),
+                            Expanded(
+                              child: DropdownButtonHideUnderline(
+                                  child: DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                        borderSide: BorderSide(
+                                          color: Colors.purple,
+                                        ))),
+                                isExpanded: true,
+                                items: categories,
+                                value: expModel.category,
+                                onChanged: (value) {
+                                  expModel.category = value;
+                                },
+                              )),
+                            ),
+                          ],
+                        ),
+                        //*******************KAYDET BUTONU********************** */
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all(Colors.white),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    Colors.purple)),
+                            onPressed: () {
+                              expModel.addExpense(Expense(
+                                name: _controllerTitle.text,
+                                price: double.parse(_controllerPrice.text),
+                                date: selectedDate ?? DateTime.now(),
+                                category: expModel.category,
+                              ));
+                              Navigator.pop(context);
+                              _controllerTitle.clear();
+                              _controllerPrice.clear();
+                              _controllerDate.clear();
+                            },
+                            child: const Text(
+                              "Kaydet",
+                            ))
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {},
-      ),
     );
-  }
-}
-
-Icon checkIcons(Category category) {
-  switch (category) {
-    case Category.food:
-      return const Icon(Icons.restaurant);
-    case Category.education:
-      return const Icon(Icons.cast_for_education);
-    case Category.technology:
-      return const Icon(Icons.computer);
-    case Category.travel:
-      return const Icon(Icons.travel_explore);
   }
 }
