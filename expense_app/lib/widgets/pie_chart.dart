@@ -1,4 +1,3 @@
-import 'package:expense_app/data/expense_data.dart';
 import 'package:expense_app/models/expense_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

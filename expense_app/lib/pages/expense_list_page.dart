@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../data/expense_data.dart';
 import '../widgets/activities.dart';
 
 class ExpenseListPage extends StatefulWidget {
@@ -96,6 +95,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                         autofocus: true,
                         controller: _controllerPrice,
                         decoration: const InputDecoration(
+                          suffix: Text("₺"),
                           hintText: "Miktar",
                           border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.purple)),
@@ -159,10 +159,15 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                                         color: Colors.purple,
                                       ))),
                               isExpanded: true,
-                              items: categories,
+                              items: Category.values.map((e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.name.toString()),
+                                );
+                              }).toList(),
                               value: expModel.category,
                               onChanged: (value) {
-                                expModel.category = value;
+                                expModel.category = value!;
                               },
                             )),
                           ),

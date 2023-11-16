@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../models/expense.dart';
 
 List<Expense> expenseList = [
@@ -26,24 +24,5 @@ List<Expense> expenseList = [
     price: 1250,
     category: Category.technology,
     date: DateTime.now(),
-  ),
-];
-
-List<DropdownMenuItem> categories = const [
-  DropdownMenuItem(
-    value: Category.food,
-    child: Text("food"),
-  ),
-  DropdownMenuItem(
-    value: Category.education,
-    child: Text("education"),
-  ),
-  DropdownMenuItem(
-    value: Category.travel,
-    child: Text("travel"),
-  ),
-  DropdownMenuItem(
-    value: Category.technology,
-    child: Text("technology"),
   ),
 ];
