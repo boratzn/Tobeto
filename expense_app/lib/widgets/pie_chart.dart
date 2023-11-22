@@ -192,17 +192,21 @@ double selectCategory(Category category) {
 
   switch (category) {
     case Category.education:
-      return double.parse(((getCategoryPrice[category]! / totalPrice) * 100)
-          .toStringAsFixed(2));
+      return double.parse(
+          (((getCategoryPrice[category] ?? 0) / totalPrice) * 100)
+              .toStringAsFixed(2));
     case Category.food:
-      return double.parse(((getCategoryPrice[category]! / totalPrice) * 100)
-          .toStringAsFixed(2));
+      return double.parse(
+          (((getCategoryPrice[category] ?? 0) / totalPrice) * 100)
+              .toStringAsFixed(2));
     case Category.technology:
-      return double.parse(((getCategoryPrice[category]! / totalPrice) * 100)
-          .toStringAsFixed(2));
+      return double.parse(
+          (((getCategoryPrice[category] ?? 0) / totalPrice) * 100)
+              .toStringAsFixed(2));
     case Category.travel:
-      return double.parse(((getCategoryPrice[category]! / totalPrice) * 100)
-          .toStringAsFixed(2));
+      return double.parse(
+          (((getCategoryPrice[category] ?? 0) / totalPrice) * 100)
+              .toStringAsFixed(2));
     default:
       throw Error();
   }

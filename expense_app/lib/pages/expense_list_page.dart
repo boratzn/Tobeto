@@ -1,9 +1,12 @@
 import 'package:expense_app/models/expense.dart';
 import 'package:expense_app/models/expense_model.dart';
+import 'package:expense_app/themes/light_theme.dart';
 import 'package:expense_app/widgets/pie_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../widgets/activities.dart';
 
@@ -27,7 +30,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
     DateTime? selectedDate;
 
     return Scaffold(
-      backgroundColor: Colors.deepPurple[100],
+      backgroundColor: lightTheme.scaffoldBackgroundColor,
       key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       body: const Center(
@@ -53,10 +56,9 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.purple,
+        backgroundColor: lightTheme.floatingActionButtonTheme.backgroundColor,
         child: const Icon(
           Icons.add,
-          color: Colors.white,
         ),
         onPressed: () {
           showModalBottomSheet(
@@ -196,11 +198,7 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                         ),
                         //*******************KAYDET BUTONU********************** */
                         ElevatedButton(
-                            style: ButtonStyle(
-                                foregroundColor:
-                                    MaterialStateProperty.all(Colors.white),
-                                backgroundColor: const MaterialStatePropertyAll(
-                                    Colors.purple)),
+                            style: lightTheme.elevatedButtonTheme.style,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 expModel.addExpense(Expense(
@@ -213,6 +211,12 @@ class _ExpenseListPageState extends State<ExpenseListPage> {
                                 _controllerTitle.clear();
                                 _controllerPrice.clear();
                                 _controllerDate.clear();
+                                showTopSnackBar(
+                                    Overlay.of(context),
+                                    CustomSnackBar.success(
+                                      message: "Ekleme işlemi başarılı!",
+                                    ),
+                                    snackBarPosition: SnackBarPosition.bottom);
                               }
                             },
                             child: const Text(
