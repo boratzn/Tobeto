@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/widgets/drawer_menu.dart';
 
 import '../data/datas.dart';
 import '../widgets/category_card.dart';
@@ -9,6 +10,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerMenu(),
       appBar: AppBar(title: const Text("Bir Kategori Seçin")),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),

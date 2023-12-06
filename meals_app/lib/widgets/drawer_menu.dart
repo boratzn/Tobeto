@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/data/datas.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({super.key});
@@ -6,33 +7,27 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.grey,
             ),
-            child: Text('Drawer Header'),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 45,
+                ),
+                Text(
+                  "User 1",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                )
+              ],
+            ),
           ),
-          ListTile(
-            title: const Text('Item 1'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
-          ListTile(
-            title: const Text('Item 2'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
+          for (var item in categories)
+            ListTile(title: Text(item.name), onTap: () {})
         ],
       ),
     );

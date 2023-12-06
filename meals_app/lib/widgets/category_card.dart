@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:meals_app/data/datas.dart';
 import 'package:meals_app/screens/meal_list.dart';
 
@@ -33,7 +34,7 @@ class CategoryCard extends StatelessWidget {
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Text(category.name),
-      ),
+      ).animate().fade(begin: 0, end: 1, duration: const Duration(seconds: 1)),
     );
   }
 }
