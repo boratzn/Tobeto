@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:meals_app/data/datas.dart';
-import 'package:meals_app/screens/meal_list.dart';
+import 'package:meals_app/utils/utils.dart';
 
 import '../models/category.dart';
 
@@ -14,26 +13,11 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MealList(
-              meals: meals
-                  .where((element) => element.categoryId == category.id)
-                  .toList(),
-              appBarTitle: category.name,
-            ),
-          ),
-        );
+        openMealList(context, category);
       },
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            category.color.withOpacity(0.5),
-            category.color.withOpacity(0.9)
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        ),
+        decoration: boxDecoration(category),
         child: Text(category.name),
       ).animate().fade(begin: 0, end: 1, duration: const Duration(seconds: 1)),
     );

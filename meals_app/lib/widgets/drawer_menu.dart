@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/data/datas.dart';
 
-import '../screens/meal_list.dart';
+import '../utils/utils.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({super.key});
@@ -14,43 +14,52 @@ class DrawerMenu extends StatelessWidget {
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: Colors.brown,
             ),
             child: Column(
               children: [
                 CircleAvatar(
+                  backgroundColor: Colors.black26,
                   radius: 45,
                   child: Icon(
                     Icons.person,
                     size: 60,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   "User 1",
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 )
               ],
             ),
           ),
           for (var item in categories)
-            ListTile(
-              title: Text(item.name),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MealList(
-                      meals: meals
-                          .where((element) => element.categoryId == item.id)
-                          .toList(),
-                      appBarTitle: item.name,
-                    ),
-                  ),
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Container(
+                decoration: boxDecoration(item),
+                child: ListTile(
+                  title: Text(item.name),
+                  onTap: () {
+                    openMealList(context, item);
+                  },
+                ),
+              ),
             )
         ],
       ),
     );
   }
 }
+
+/*
+ListTile(
+                tileColor: item.color,
+                title: Text(item.name),
+                onTap: () {
+                  openMealList(context, item);
+                },
+              )
+
+ */
