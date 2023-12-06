@@ -12,26 +12,16 @@ class DrawerMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.brown,
-            ),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.black26,
-                  radius: 45,
-                  child: Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Colors.white,
-                  ),
-                ),
-                Text(
-                  "User 1",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                )
-              ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                    image: AssetImage("assets/Cook.jpg"), fit: BoxFit.cover),
+                color: Colors.brown,
+              ),
+              child: null,
             ),
           ),
           for (var item in categories)
@@ -52,14 +42,3 @@ class DrawerMenu extends StatelessWidget {
     );
   }
 }
-
-/*
-ListTile(
-                tileColor: item.color,
-                title: Text(item.name),
-                onTap: () {
-                  openMealList(context, item);
-                },
-              )
-
- */
