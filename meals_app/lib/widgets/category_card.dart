@@ -21,6 +21,7 @@ class CategoryCard extends StatelessWidget {
               meals: meals
                   .where((element) => element.categoryId == category.id)
                   .toList(),
+              appBarTitle: category.name,
             ),
           ),
         );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/data/datas.dart';
 
+import '../screens/meal_list.dart';
+
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({super.key});
 
@@ -31,7 +33,22 @@ class DrawerMenu extends StatelessWidget {
             ),
           ),
           for (var item in categories)
-            ListTile(title: Text(item.name), onTap: () {})
+            ListTile(
+              title: Text(item.name),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MealList(
+                      meals: meals
+                          .where((element) => element.categoryId == item.id)
+                          .toList(),
+                      appBarTitle: item.name,
+                    ),
+                  ),
+                );
+              },
+            )
         ],
       ),
     );

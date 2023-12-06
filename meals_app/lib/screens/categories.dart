@@ -9,15 +9,19 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        var item = categories[index];
-        return CategoryCard(category: item);
-      },
+    return Scaffold(
+      drawer: const DrawerMenu(),
+      appBar: AppBar(title: const Text("Bir Kategori Seçin")),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          var item = categories[index];
+          return CategoryCard(category: item);
+        },
+      ),
     );
   }
 }

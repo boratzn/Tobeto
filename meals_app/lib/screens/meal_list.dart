@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
 class MealList extends StatelessWidget {
-  const MealList({super.key, required this.meals});
+  const MealList({super.key, required this.meals, required this.appBarTitle});
 
   final List<Meal> meals;
+  final String appBarTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class MealList extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Meal list"),
+        title: Text(appBarTitle),
       ),
       body: widget,
     );
