@@ -18,6 +18,10 @@ class DrawerMenu extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 45,
+                  child: Icon(
+                    Icons.person,
+                    size: 60,
+                  ),
                 ),
                 Text(
                   "User 1",

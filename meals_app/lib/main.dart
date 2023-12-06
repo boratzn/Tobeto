@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/screens/categories.dart';
+import 'package:meals_app/widgets/drawer_menu.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -14,7 +15,13 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: Categories(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Kategori Listesi"),
+        ),
+        drawer: DrawerMenu(),
+        body: Categories(),
+      ),
     );
   }
 }
