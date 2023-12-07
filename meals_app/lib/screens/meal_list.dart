@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/widgets/meal_card.dart';
 
 import '../models/meal.dart';
 
@@ -14,8 +15,11 @@ class MealList extends StatelessWidget {
       itemCount: meals.length,
       itemBuilder: (context, index) {
         var item = meals[index];
-        return Container(
-          child: Text(item.name),
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            child: MealCard(meal: item),
+          ),
         );
       },
     );

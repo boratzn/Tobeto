@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/favorites.dart';
 import 'package:meals_app/widgets/drawer_menu.dart';
 
 import '../data/datas.dart';
@@ -11,7 +12,22 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerMenu(),
-      appBar: AppBar(title: const Text("Bir Kategori Seçin")),
+      appBar: AppBar(
+        title: const Text("Bir Kategori Seçin"),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Favorites(),
+                        ));
+                  },
+                  icon: Icon(Icons.favorite)))
+        ],
+      ),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

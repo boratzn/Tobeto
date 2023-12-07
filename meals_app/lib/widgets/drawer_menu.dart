@@ -36,7 +36,7 @@ class DrawerMenu extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
         ],
       ),
     );
