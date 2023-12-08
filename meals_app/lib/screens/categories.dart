@@ -31,7 +31,7 @@ class Categories extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+            crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
         itemCount: categories.length,
         itemBuilder: (context, index) {
           var item = categories[index];
