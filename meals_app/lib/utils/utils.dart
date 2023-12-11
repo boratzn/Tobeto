@@ -18,6 +18,7 @@ void openMealList(BuildContext context, Category item) {
 
 BoxDecoration boxDecoration(Category category) {
   return BoxDecoration(
+    borderRadius: BorderRadius.circular(16),
     gradient: LinearGradient(colors: [
       category.color.withOpacity(0.5),
       category.color.withOpacity(0.9)
