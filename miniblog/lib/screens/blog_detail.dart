@@ -61,7 +61,7 @@ class _BlogDetailState extends State<BlogDetail> {
                       Text(
                         blog.title,
                         style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 5,
