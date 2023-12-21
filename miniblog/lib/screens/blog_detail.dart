@@ -37,7 +37,10 @@ class _BlogDetailState extends State<BlogDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: blog == null ? null : Text(blog.title),
+        title: blog == null
+            ? null
+            : SingleChildScrollView(
+                scrollDirection: Axis.horizontal, child: Text(blog.title)),
       ),
       body: blog == null
           ? const Center(
@@ -45,41 +48,37 @@ class _BlogDetailState extends State<BlogDetail> {
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 4 / 3,
-                        child: Image.network(blog.thumbnail),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        blog.title,
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        blog.content,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text("Yazar : ${blog.author}",
-                          style: TextStyle(color: Colors.black54, fontSize: 16))
-                    ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 4 / 3,
+                    child: Image.network(blog.thumbnail),
                   ),
-                ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    blog.title,
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    blog.content,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text("Yazar : ${blog.author}",
+                      style: TextStyle(color: Colors.black54, fontSize: 16))
+                ],
               ),
             ),
     );
