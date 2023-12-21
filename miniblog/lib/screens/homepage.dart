@@ -58,7 +58,9 @@ class _HomePageState extends State<HomePage> {
               future: getArticles(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator(); // Veri yüklenirken gösterilecek bir widget
+                  return const Center(
+                      child:
+                          CircularProgressIndicator()); // Veri yüklenirken gösterilecek bir widget
                 } else if (snapshot.hasError) {
                   return Text(
                       'Hata: ${snapshot.error}'); // Hata durumunda gösterilecek bir widget

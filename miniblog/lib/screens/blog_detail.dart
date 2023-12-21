@@ -43,9 +43,43 @@ class _BlogDetailState extends State<BlogDetail> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Card(
-              child: Column(
-                children: [Image.network(blog.thumbnail)],
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 4 / 3,
+                        child: Image.network(blog.thumbnail),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        blog.title,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        blog.content,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text("Yazar : ${blog.author}",
+                          style: TextStyle(color: Colors.black54, fontSize: 16))
+                    ],
+                  ),
+                ),
               ),
             ),
     );
