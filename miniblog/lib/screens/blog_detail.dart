@@ -16,9 +16,9 @@ class BlogDetail extends StatefulWidget {
 class _BlogDetailState extends State<BlogDetail> {
   var blog;
 
-  getArticleById(String id) async {
-    final url =
-        Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles/$id");
+  getArticleById() async {
+    final url = Uri.parse(
+        "https://tobetoapi.halitkalayci.com/api/Articles/${widget.id}");
     final response = await http.get(url);
     final jsonData = jsonDecode(response.body);
 
@@ -30,7 +30,7 @@ class _BlogDetailState extends State<BlogDetail> {
   @override
   void initState() {
     super.initState();
-    getArticleById(widget.id);
+    getArticleById();
   }
 
   @override
