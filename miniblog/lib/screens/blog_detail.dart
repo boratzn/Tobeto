@@ -27,9 +27,8 @@ class _BlogDetailState extends State<BlogDetail> {
         }
 
         if (state is ArticleLoading) {
-          return Scaffold(
-            appBar: AppBar(),
-            body: const Center(child: CircularProgressIndicator()),
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
