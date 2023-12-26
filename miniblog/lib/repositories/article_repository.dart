@@ -28,10 +28,8 @@ class ArticleRepository {
     Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
     var request = http.MultipartRequest("POST", url);
 
-    if (blog.thumbnail != null) {
-      request.files
-          .add(await http.MultipartFile.fromPath("File", blog.thumbnail));
-    }
+    request.files
+        .add(await http.MultipartFile.fromPath("File", blog.thumbnail));
 
     request.fields['Title'] = blog.title;
     request.fields['Content'] = blog.content;
