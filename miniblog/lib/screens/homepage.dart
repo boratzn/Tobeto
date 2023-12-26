@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:miniblog/models/article.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:miniblog/bloc/article_bloc.dart';
 import 'package:miniblog/screens/add_blog.dart';
 import 'package:miniblog/widgets/blog_item.dart';
 
@@ -14,26 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> blogs = [];
-
-  Future<List<dynamic>> getArticles() async {
-    final url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
-    final response = await http.get(url);
-    final List jsonData = jsonDecode(response.body);
-
-    return jsonData.map((e) => Article.fromJson(e)).toList();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getArticles().then((value) {
-      setState(() {
-        blogs = value;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,44 +23,45 @@ class _HomePageState extends State<HomePage> {
                 final result = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const AddBlog()));
 
-                if (result != null && result == true) getArticles();
+                if (result != null && result == true) {
+                  context.read<ArticleBloc>().add(FetchArticles());
+                }
               },
               icon: const Icon(Icons.add))
         ],
       ),
-      body: blogs.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : FutureBuilder<List<dynamic>>(
-              future: getArticles(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                      child:
-                          CircularProgressIndicator()); // Veri yüklenirken gösterilecek bir widget
-                } else if (snapshot.hasError) {
-                  return Text(
-                      'Hata: ${snapshot.error}'); // Hata durumunda gösterilecek bir widget
-                } else if (snapshot.hasData) {
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      getArticles();
-                    },
-                    child: ListView.builder(
-                      itemCount: blogs.length,
-                      itemBuilder: (context, index) {
-                        Article blog = blogs[index];
-                        return BlogItem(blog: blog);
-                      },
-                    ),
-                  ); // Veri geldiğinde gösterilecek bir widget
-                } else {
-                  return const Text(
-                      'Beklenmeyen bir durum oluştu'); // Beklenmeyen bir durumda gösterilecek bir widget
-                }
-              },
-            ),
+      body: BlocBuilder<ArticleBloc, ArticleState>(
+        builder: (context, state) {
+          if (state is ArticleInitial) {
+            // bloc'a fetcharticles eventi göndermek
+            context
+                .read<ArticleBloc>()
+                .add(FetchArticles()); // UI'dan BLOC'a Event
+            return const Center(child: Text("İstek atılıyor..."));
+          }
+
+          if (state is ArticleLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is ArticlesLoaded) {
+            return ListView.builder(
+                itemCount: state.blogs.length,
+                itemBuilder: (context, index) =>
+                    BlogItem(blog: state.blogs[index]));
+          }
+
+          if (state is ArticleError) {
+            return const Center(
+              child: Text("Bloglar yüklenirken bir hata oluştu."),
+            );
+          }
+
+          return const Center(
+            child: Text("Unknown State"),
+          );
+        },
+      ),
     );
   }
 }

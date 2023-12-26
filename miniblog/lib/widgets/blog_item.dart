@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:miniblog/bloc/article_bloc.dart';
 import 'package:miniblog/screens/blog_detail.dart';
 
 import '../models/article.dart';
@@ -17,6 +19,8 @@ class BlogItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: InkWell(
         onTap: () {
+          final articleBloc = BlocProvider.of<ArticleBloc>(context);
+          articleBloc.add(FetchArticleByID(id: blog.id));
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -28,7 +32,9 @@ class BlogItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                  aspectRatio: 4 / 2, child: Image.network(blog.thumbnail)),
+                  aspectRatio: 4 / 2,
+                  child:
+                      Hero(tag: blog.id, child: Image.network(blog.thumbnail))),
               ListTile(
                 title: Text(
                   blog.title,

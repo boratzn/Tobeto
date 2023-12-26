@@ -1,17 +1,19 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 Article articleFromJson(String str) => Article.fromJson(json.decode(str));
 
 String articleToJson(Article data) => json.encode(data.toJson());
 
-class Article {
+class Article extends Equatable {
   final String id;
   final String title;
   final String content;
   final String thumbnail;
   final String author;
 
-  Article({
+  const Article({
     required this.id,
     required this.title,
     required this.content,
@@ -34,4 +36,13 @@ class Article {
         "thumbnail": thumbnail,
         "author": author,
       };
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        content,
+        thumbnail,
+        author,
+      ];
 }

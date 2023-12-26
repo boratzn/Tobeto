@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
+import 'package:miniblog/bloc/article_bloc.dart';
+import 'package:miniblog/models/article.dart';
 
 class AddBlog extends StatefulWidget {
   const AddBlog({super.key});
@@ -25,26 +27,6 @@ class _AddBlogState extends State<AddBlog> {
     setState(() {
       selectedImage = selectedFile;
     });
-  }
-
-  submitForm() async {
-    Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
-    var request = http.MultipartRequest("POST", url);
-
-    if (selectedImage != null) {
-      request.files
-          .add(await http.MultipartFile.fromPath("File", selectedImage!.path));
-    }
-
-    request.fields['Title'] = title;
-    request.fields['Content'] = content;
-    request.fields['Author'] = author;
-
-    final response = await request.send();
-
-    if (response.statusCode == 201) {
-      Navigator.pop(context, true);
-    }
   }
 
   @override
@@ -119,7 +101,26 @@ class _AddBlogState extends State<AddBlog> {
                   },
                   onSaved: (newValue) => author = newValue!,
                 ),
-                ElevatedButton(onPressed: () {}, child: const Text("GÖNDER"))
+                ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        if (selectedImage == null) {
+                          // Validasyon hatası göster..
+                          return;
+                        }
+                        // Validasyonlar başarılı
+                        formKey.currentState!.save();
+                        var article = Article(
+                            id: "",
+                            title: title,
+                            content: content,
+                            thumbnail: selectedImage!.path,
+                            author: author);
+                        context.read<ArticleBloc>().add(
+                            AddArticle(article: article, context: context));
+                      }
+                    },
+                    child: const Text("GÖNDER"))
               ],
             ),
           ),
