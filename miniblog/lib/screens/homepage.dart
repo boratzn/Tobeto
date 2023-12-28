@@ -13,6 +13,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    context.read<ArticleBloc>().add(ResetEvent(event: FetchArticles()));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,6 +30,8 @@ class _HomePageState extends State<HomePage> {
                     MaterialPageRoute(builder: (context) => const AddBlog()));
 
                 if (result != null && result == true) {
+                  //Blog ekleme sayfasından geri dönerken gönderdiğimiz değişken ile anasayfaya döndüğümüzü belirtip
+                  //bütün verileri tekrardan çekmemiz için FetchArticles event ini Bloc'a gönderiyoruz.
                   context.read<ArticleBloc>().add(FetchArticles());
                 }
               },
@@ -57,8 +65,6 @@ class _HomePageState extends State<HomePage> {
               child: Text("Bloglar yüklenirken bir hata oluştu."),
             );
           }
-
-          //context.read<ArticleBloc>().add(FetchArticles());
 
           return const Center(
             child: Text("Unknown State"),

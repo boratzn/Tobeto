@@ -122,6 +122,7 @@ class _AddBlogState extends State<AddBlog> {
                             content: content,
                             thumbnail: selectedImage!.path,
                             author: author);
+                        //Bloc'a AddArticle eventini gönderiyoruz
                         context.read<ArticleBloc>().add(
                             AddArticle(article: article, context: context));
                       }
