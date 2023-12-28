@@ -15,36 +15,43 @@ class BlogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: InkWell(
-        onTap: () {
-          final articleBloc = BlocProvider.of<ArticleBloc>(context);
-          articleBloc.add(FetchArticleByID(id: blog.id));
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BlogDetail(id: blog.id),
-              ));
-        },
-        child: Card(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                  aspectRatio: 4 / 2,
-                  child:
-                      Hero(tag: blog.id, child: Image.network(blog.thumbnail))),
-              ListTile(
-                title: Text(
-                  blog.title,
-                ),
-                subtitle: Text(blog.author),
-              )
-            ],
+    return BlocBuilder<ArticleBloc, ArticleState>(
+      builder: (ctx, state) {
+        return Padding(
+          padding: const EdgeInsets.all(16),
+          child: InkWell(
+            onTap: () {
+              if (state is! ArticleInitial) {
+                ctx
+                    .read<ArticleBloc>()
+                    .add(ResetEvent(event: FetchArticleByID(id: blog.id)));
+              }
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlogDetail(id: blog.id),
+                  ));
+            },
+            child: Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AspectRatio(
+                      aspectRatio: 4 / 2,
+                      child: Hero(
+                          tag: blog.id, child: Image.network(blog.thumbnail))),
+                  ListTile(
+                    title: Text(
+                      blog.title,
+                    ),
+                    subtitle: Text(blog.author),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -14,6 +14,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     on<FetchArticles>(_onFetchArticles);
     on<FetchArticleByID>(_onFetchArticleById);
     on<AddArticle>(_onAddArticle);
+    on<ResetEvent>(_resetEvent);
   }
 
   _onFetchArticles(FetchArticles event, Emitter<ArticleState> emit) async {
@@ -29,12 +30,12 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   _onFetchArticleById(
       FetchArticleByID event, Emitter<ArticleState> emit) async {
-    emit(ArticleLoading());
+    emit(ArticlesDetailLoading());
 
     try {
       final article = await articleRepository.getArticleById(event.id);
       emit(
-        ArticleLoaded(blog: article),
+        ArticleDetailLoaded(blog: article),
       );
     } catch (e) {
       emit(ArticleError());
@@ -52,6 +53,14 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       );
     } catch (e) {
       emit(ArticleError());
+    }
+  }
+
+  void _resetEvent(ResetEvent event, Emitter<ArticleState> emit) {
+    if (event.event is FetchArticles) {
+      emit(ArticleInitial());
+    } else {
+      emit(ArticleDetailInitial());
     }
   }
 }

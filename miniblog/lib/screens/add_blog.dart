@@ -34,6 +34,12 @@ class _AddBlogState extends State<AddBlog> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Yeni Blog Ekle"),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

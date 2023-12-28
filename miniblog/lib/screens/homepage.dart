@@ -47,8 +47,9 @@ class _HomePageState extends State<HomePage> {
           if (state is ArticlesLoaded) {
             return ListView.builder(
                 itemCount: state.blogs.length,
-                itemBuilder: (context, index) =>
-                    BlogItem(blog: state.blogs[index]));
+                itemBuilder: (context, index) => BlogItem(
+                      blog: state.blogs[index],
+                    ));
           }
 
           if (state is ArticleError) {
@@ -56,6 +57,8 @@ class _HomePageState extends State<HomePage> {
               child: Text("Bloglar yüklenirken bir hata oluştu."),
             );
           }
+
+          //context.read<ArticleBloc>().add(FetchArticles());
 
           return const Center(
             child: Text("Unknown State"),

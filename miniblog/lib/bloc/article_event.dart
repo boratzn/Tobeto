@@ -1,19 +1,13 @@
 part of 'article_bloc.dart';
 
-abstract class ArticleEvent extends Equatable {}
+abstract class ArticleEvent {}
 
-class FetchArticles extends ArticleEvent {
-  @override
-  List<Object?> get props => [];
-}
+class FetchArticles extends ArticleEvent {}
 
 class FetchArticleByID extends ArticleEvent {
   final String id;
 
   FetchArticleByID({required this.id});
-
-  @override
-  List<Object?> get props => [id];
 }
 
 class AddArticle extends ArticleEvent {
@@ -21,7 +15,10 @@ class AddArticle extends ArticleEvent {
   final BuildContext context;
 
   AddArticle({required this.article, required this.context});
+}
 
-  @override
-  List<Object?> get props => [article, context];
+class ResetEvent extends ArticleEvent {
+  final ArticleEvent event;
+
+  ResetEvent({required this.event});
 }

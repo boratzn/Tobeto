@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miniblog/bloc/article_bloc.dart';
+import 'package:miniblog/models/article.dart';
 
 class BlogDetail extends StatefulWidget {
   const BlogDetail({super.key, required this.id});
@@ -12,44 +13,33 @@ class BlogDetail extends StatefulWidget {
 }
 
 class _BlogDetailState extends State<BlogDetail> {
-  var blog;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ArticleBloc, ArticleState>(
       builder: (context, state) {
-        if (state is ArticleInitial) {
-          // bloc'a fetcharticles eventi göndermek
-          context
-              .read<ArticleBloc>()
-              .add(FetchArticleByID(id: widget.id)); // UI'dan BLOC'a Event
-          return const Center(child: Text("İstek atılıyor..."));
+        if (state is ArticleDetailInitial) {
+          context.read<ArticleBloc>().add(FetchArticleByID(id: widget.id));
+          return const Text("İstek atılıyor..");
         }
-
-        if (state is ArticleLoading) {
+        if (state is ArticlesDetailLoading) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
-        if (state is ArticleLoaded) {
-          blog = state.blog;
+        if (state is ArticleDetailLoaded) {
+          Article blog = state.blog;
           return Scaffold(
             appBar: AppBar(
-              title: blog == null
-                  ? null
-                  : SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(blog.title)),
-              automaticallyImplyLeading: true,
+              title: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal, child: Text(blog.title)),
+              automaticallyImplyLeading: false,
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  context.read<ArticleBloc>().add(FetchArticles());
-                  Navigator.pop(context,
-                      true); // Geri butonuna basıldığında önceki sayfaya dönme işlemi
-                },
-              ),
+                  onPressed: () {
+                    context.read<ArticleBloc>().add(FetchArticles());
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back)),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -90,14 +80,14 @@ class _BlogDetailState extends State<BlogDetail> {
           );
         }
 
-        if (state is ArticleError) {
+        if (state is ArticlesDetailError) {
           return const Center(
             child: Text("Bloglar yüklenirken bir hata oluştu."),
           );
         }
 
         return const Center(
-          child: Text("Unknown State"),
+          child: Scaffold(body: Text("Unknown State")),
         );
       },
     );

@@ -20,13 +20,19 @@ final class ArticlesLoaded extends ArticleState {
   List<Object> get props => [blogs];
 }
 
-final class ArticleLoaded extends ArticleState {
+final class ArticleError extends ArticleState {}
+
+final class ArticleDetailInitial extends ArticleState {}
+
+class ArticlesDetailLoading extends ArticleState {}
+
+final class ArticleDetailLoaded extends ArticleState {
   final Article blog;
 
-  const ArticleLoaded({required this.blog});
+  const ArticleDetailLoaded({required this.blog});
 
   @override
   List<Object> get props => [blog];
 }
 
-final class ArticleError extends ArticleState {}
+class ArticlesDetailError extends ArticleState {}
