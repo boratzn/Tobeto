@@ -71,7 +71,12 @@ class _AuthState extends State<Auth> {
                               const InputDecoration(labelText: "E-posta"),
                           autocorrect: false,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (value) {},
+                          validator: (value) {
+                            if (value == "" || value == null) {
+                              return "Alanları boş bırakmayınız";
+                            }
+                            return null;
+                          },
                           onSaved: (newValue) {
                             _email = newValue!;
                           },
