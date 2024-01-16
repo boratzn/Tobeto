@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,15 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDOmNPTTdO1jTz8I3ENFEwIp2DIjHxBjqM',
-    appId: '1:953704517019:web:d1d46c88991bd1c420e53e',
-    messagingSenderId: '953704517019',
-    projectId: 'flutter-starter-9981e',
-    authDomain: 'flutter-starter-9981e.firebaseapp.com',
-    storageBucket: 'flutter-starter-9981e.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyADWZwBckM6Q6DPF3UJKCa_ADcdNhGAqbo',
     appId: '1:953704517019:android:5e8e52aab4ca922b20e53e',
@@ -67,14 +64,5 @@ class DefaultFirebaseOptions {
     projectId: 'flutter-starter-9981e',
     storageBucket: 'flutter-starter-9981e.appspot.com',
     iosBundleId: 'com.example.firebaseKullanimi',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBLQgpvOXqTV2JNYpLk2PkHkljvuCQPNZY',
-    appId: '1:953704517019:ios:bb0edf036d9fb4ae20e53e',
-    messagingSenderId: '953704517019',
-    projectId: 'flutter-starter-9981e',
-    storageBucket: 'flutter-starter-9981e.appspot.com',
-    iosBundleId: 'com.example.firebaseKullanimi.RunnerTests',
   );
 }
